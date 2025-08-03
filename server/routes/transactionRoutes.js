@@ -5,7 +5,7 @@ const protect = require('../middleware/protect')
 
 
 Router.post('/transactions',protect,addTransaction)
-Router.get('/transactions',getTransactions)
-Router.delete('/transactions/:id',deleteTransaction)
+Router.get('/transactions',protect,getTransactions)
+Router.delete('/transactions/:id',protect,deleteTransaction)
 
 module.exports = Router

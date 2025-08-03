@@ -21,7 +21,7 @@ const addTransaction = async (req,res)=>{
 const getTransactions = async (req,res)=>{
     try {
         console.log(req.user);
-        const transaction = await Transaction.find({user:req.user}).sort({date:-1})
+        const transaction = await Transaction.find({userId:req.user}).sort({date:-1})
         res.status(200).json({transaction})
     } catch (error) {
          res.status(500).json({ message: 'Failed to fetch transactions', error: error.message });
