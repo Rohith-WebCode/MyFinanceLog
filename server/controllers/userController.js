@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const registerUser  =async (req,res)=>{
     const {name,email,password} = req.body
+    const profilePic = req.file ? req.file.path : undefined;
     try {
         const userExists = await User.findOne({email});
         if(userExists) return res.status(400).json({ msg: "User already exists" });
@@ -13,7 +14,8 @@ const registerUser  =async (req,res)=>{
         const newUser = new User({
             name,
             email,
-            password :hashedPassword
+            password :hashedPassword,
+            profilePic
         })
 
         await newUser.save()
