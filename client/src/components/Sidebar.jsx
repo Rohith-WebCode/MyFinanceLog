@@ -7,7 +7,6 @@ const Sidebar = () => {
         <div className='flex items-center'>
         <img src={Logo} className='w-10'/>
         <h1 className='text-xl font-bold'>MyFinanceLog</h1>
-
         </div>
 
 

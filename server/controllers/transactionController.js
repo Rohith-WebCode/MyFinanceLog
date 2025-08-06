@@ -19,10 +19,23 @@ const addTransaction = async (req,res)=>{
 }
 
 const getTransactions = async (req,res)=>{
+  const page  =Math.max (parseInt(req.query.pages) || 1,1)
+  const limit = 10
+  const skip  = (page - 1)*limit
     try {
-        console.log(req.user);
-        const transaction = await Transaction.find({userId:req.user}).sort({date:-1})
-        res.status(200).json({transaction})
+        const [transaction,total]= await Promise.all([
+          Transaction.find({userId:req.user})
+          .sort({date:-1})
+          .skip(skip)
+          .limit(limit),
+          Transaction.countDocuments({userId:req.user})
+        ])
+        res.status(200).json({
+          transaction,
+          page,
+          totalPages:Math.ceil(total/limit),
+          total
+        })
     } catch (error) {
          res.status(500).json({ message: 'Failed to fetch transactions', error: error.message });
     }
