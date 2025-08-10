@@ -1,8 +1,10 @@
 import React from 'react'
+import '../App.css'
 import { InputBase, IconButton, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import MenuIcon from '@mui/icons-material/Menu';
+import NavbarDrawer from './NavbarDrawer';
+
 
 const Topbar = () => {
   return (
@@ -38,18 +40,9 @@ const Topbar = () => {
 
 
       {/* Profile Icon */}
-      <AccountCircleIcon sx={{fontSize:{xs:35, md:40} , color: "#555" }} />
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{
-          display: { xs: "block", md: "none" },
-          mx: 2,
-        }}
-      >
-        <MenuIcon />
-      </IconButton>
+      <AccountCircleIcon sx={{fontSize:{xs:35, sm:40} , color: "#555" }} />
+
+      <NavbarDrawer/>
       </div>
     </div>
 
