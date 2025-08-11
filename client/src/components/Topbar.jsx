@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../App.css'
-import { InputBase, IconButton, Paper } from "@mui/material";
+import { InputBase, IconButton, Paper, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NavbarDrawer from './NavbarDrawer';
+import { Link } from 'react-router-dom';
 
 
 const Topbar = () => {
+
+  const [user,setUser] = useState(false)
+  // const [login,setlogin] = useState(true)
+
   return (
   <div className="p-4 w-full">
     <div className='flex justify-between md:justify-end items-center gap-4'>
@@ -40,10 +45,13 @@ const Topbar = () => {
 
 
       {/* Profile Icon */}
-      <AccountCircleIcon sx={{fontSize:{xs:35, sm:40} , color: "#555" }} />
+      {
+        user ? <img src='' className=''/> : <Link to="/register"><Button variant="outlined"sx={{ mx: 2, borderRadius:10, fontSize:12}}>sign Up</Button></Link> 
+      }
+    
 
       <NavbarDrawer/>
-      </div>
+      </div>  
     </div>
 
 {/* mobile search bar */}

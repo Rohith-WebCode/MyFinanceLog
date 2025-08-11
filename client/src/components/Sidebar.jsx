@@ -3,6 +3,7 @@ import React from 'react'
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 import { HiOutlineLogout } from "react-icons/hi";
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
@@ -14,7 +15,7 @@ const Sidebar = () => {
         <div className='block'>
           <div className='flex items-center py-2 gap-2'>
             <MdSpaceDashboard />
-            <p className='text-lg'>Dashboard</p>
+           <Link to="/"><p className='text-lg'>Dashboard</p></Link> 
           </div>
           <div className='flex items-center py-2 gap-2'>
             <FaMoneyBillWave />
