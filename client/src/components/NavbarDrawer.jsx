@@ -16,9 +16,19 @@ import { IconButton } from '@mui/material';
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 import { HiOutlineLogout } from "react-icons/hi";
+import { useDispatch } from 'react-redux';
+import { logOut } from '../store/authSlice';
 
 export default function NavbarDrawer() {
   const [open, setOpen] = React.useState(false);
+
+   const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
+
+
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -29,7 +39,7 @@ export default function NavbarDrawer() {
     { text: 'Dashboard', path: '/', icon: <MdSpaceDashboard /> },
     { text: 'Income', path: '/about', icon: < FaMoneyBillWave/> },
     { text: 'Expenses', path: '/services', icon: <FaShoppingCart /> },
-    { text: 'Logout', path: '/blog', icon: < HiOutlineLogout/> },
+    { text: 'Logout', onClick:handleLogout, icon: < HiOutlineLogout/> },
   ];
 
 
@@ -41,6 +51,7 @@ export default function NavbarDrawer() {
             <ListItemButton
               component={Link}
               to={link.path}
+              onClick={link.onClick ? link.onClick : undefined}
             >
               <ListItemIcon>{link.icon}</ListItemIcon>
               <ListItemText primary={link.text} />
@@ -49,18 +60,6 @@ export default function NavbarDrawer() {
         ))}
       </List>
       <Divider />
-      {/* <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton> 
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
     </Box>
   );
 

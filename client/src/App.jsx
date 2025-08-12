@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,13 +6,29 @@ import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
 import Dashboard from "./pages/Dashboard";
 import SignupAndLogin from "./pages/SignupAndLogin";
+import { useDispatch, useSelector } from "react-redux";
+import { getMe } from "./store/authSlice";
 
 function AppContent() {
+
+  const dispatch = useDispatch();
+  const { user, loading } = useSelector(state => state.auth);
   const location = useLocation();
+
+  console.log(user);
+  
 
   // Paths where we hide Sidebar & Topbar
   const hideNavPaths = ["/register", "/login"];
   const hideNav = hideNavPaths.includes(location.pathname);
+
+  useEffect(() => {
+    dispatch(getMe()); 
+    console.log("this is is call");
+    
+  
+  }, [dispatch]);
+
 
   return (
     <div className="flex h-screen">

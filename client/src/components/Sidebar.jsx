@@ -4,8 +4,18 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../store/authSlice';
 
 const Sidebar = () => {
+
+   const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
+
+
   return (
     <div className='w-6xl text-center p-7'>
 
@@ -27,7 +37,7 @@ const Sidebar = () => {
           </div>
         </div>
 
-        <div className='absolute bottom-2'>
+        <div className='absolute bottom-2' onClick={handleLogout}>
            <div className='flex items-center py-2 gap-2'>
             <HiOutlineLogout className=''/>
             <p className='text-lg font-normal'>Logout</p>

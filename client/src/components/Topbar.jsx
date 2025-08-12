@@ -5,13 +5,15 @@ import SearchIcon from "@mui/icons-material/Search";
 // import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NavbarDrawer from './NavbarDrawer';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const Topbar = () => {
+  const { user} = useSelector(state => state.auth);
 
-  const [user,setUser] = useState(false)
-  // const [login,setlogin] = useState(true)
-
+  // console.log(user.profilePic);
+  
+ 
   return (
   <div className="p-4 w-full">
     <div className='flex justify-between md:justify-end items-center gap-4'>
@@ -46,7 +48,7 @@ const Topbar = () => {
 
       {/* Profile Icon */}
       {
-        user ? <img src='' className=''/> : <Link to="/register"><Button variant="outlined"sx={{ mx: 2, borderRadius:10, fontSize:12}}>sign Up</Button></Link> 
+        user ? <img src={user.profilePic} className='w-12 h-12 rounded-full m-2'/> : <Link to="/register"><Button variant="outlined"sx={{ mx: 2, borderRadius:10, fontSize:12}}>sign Up</Button></Link> 
       }
     
 

@@ -3,13 +3,15 @@ import PersonIcon from '@mui/icons-material/Person';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import api from '../utils/axios'
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../store/authSlice';
 
 const SignupAndLogin = () => {
   const [login, setLogin] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,12 +45,11 @@ const SignupAndLogin = () => {
   // loginData.append("email", formData.email);
   // loginData.append("password", formData.password);
 
-
   try {
     if(!login){
        const res =await api.post('/api/auth/signup',data)
       if(res.data.success) {
-        localStorage.setItem("token", res.data.token);
+        // localStorage.setItem("token", res.data.token);
         toast.success(res.data.message || "Signup successful!");
         setLogin(true);
           }else{
@@ -64,6 +65,7 @@ const SignupAndLogin = () => {
       const res = await api.post('/api/auth/login',loginData)
         if(res.data.success) {
         localStorage.setItem("token", res.data.token);
+        dispatch(loginSuccess({user:res.data.user,token:res.data.token}))
         toast.success(res.data.message || "Login successful!");
          navigate("/");
           }else{
