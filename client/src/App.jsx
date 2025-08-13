@@ -12,11 +12,10 @@ import { getMe } from "./store/authSlice";
 function AppContent() {
 
   const dispatch = useDispatch();
-  const { user, loading } = useSelector(state => state.auth);
+  // const { user, loading } = useSelector(state => state.auth);
   const location = useLocation();
 
-  console.log(user);
-  
+
 
   // Paths where we hide Sidebar & Topbar
   const hideNavPaths = ["/register", "/login"];
@@ -24,8 +23,6 @@ function AppContent() {
 
   useEffect(() => {
     dispatch(getMe()); 
-    console.log("this is is call");
-    
   
   }, [dispatch]);
 

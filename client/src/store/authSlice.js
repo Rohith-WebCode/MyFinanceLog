@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../utils/axios";
-import { toast } from "react-toastify";
-
 
 // Get user on refresh
 export const getMe = createAsyncThunk('auth/profile', async () => { 
   const res = await api.get('/api/profile');
   return res.data;
+  console.log(res.data);
+  
 });
 
 
@@ -26,7 +26,10 @@ const authSlice = createSlice({
     name:"auth",
     initialState,
     reducers:{
-
+        loginSuccess:(state,action)=>{
+            state.user = action.payload.user;
+            // state.token = action.payload.token;
+        }
     },
     extraReducers:(builder)=>{
         builder

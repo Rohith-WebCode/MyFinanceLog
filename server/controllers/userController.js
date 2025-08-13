@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const registerUser  =async (req,res)=>{
+    console.log("hi this is testing");
+    
     const {name,email,password} = req.body
     const profilePic = req.file ? req.file.path : undefined;
     try {

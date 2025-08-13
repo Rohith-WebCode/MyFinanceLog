@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../store/authSlice';
+import imageCompression from "browser-image-compression";
 
 const SignupAndLogin = () => {
   const [login, setLogin] = useState(false);
@@ -32,31 +33,45 @@ const SignupAndLogin = () => {
 
  const handleSubmit = async(e)=>{
   e.preventDefault();
-
-  const data = new FormData(); 
-
-   data.append("name", formData.name);
-   data.append("email", formData.email);
-   data.append("password", formData.password);
-   data.append("profilePic", formData.image);
-
-
-  // const loginData = new FormData()
-  // loginData.append("email", formData.email);
-  // loginData.append("password", formData.password);
-
   try {
-    if(!login){
-       const res =await api.post('/api/auth/signup',data)
-      if(res.data.success) {
-        // localStorage.setItem("token", res.data.token);
-        toast.success(res.data.message || "Signup successful!");
-        setLogin(true);
-          }else{
-            toast.error(res.data.message || "Something went wrong!");
-          }   
-  
-    }else{
+    
+if (!login) {
+  try {
+    let compressedImage = formData.image;
+
+    // Compress only if an image is selected
+    if (formData.image) {
+      const options = {
+        maxSizeMB: 1, // Target size in MB
+        maxWidthOrHeight: 800, // Resize for faster upload
+        useWebWorker: true, // Runs in background thread
+      };
+      compressedImage = await imageCompression(formData.image, options);
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("password", formData.password);
+    if (compressedImage) {
+      formDataToSend.append("profilePic", compressedImage);
+    }
+
+    const res = await api.post("/api/auth/signup", formDataToSend, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    if (res.data.success) {
+      toast.success(res.data.message || "Signup successful!");
+      setLogin(true);
+    } else {
+      toast.error(res.data.message || "Something went wrong!");
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("Image compression failed!");
+  }
+}else{
     const loginData = {
         email: formData.email,
         password: formData.password,
@@ -64,8 +79,8 @@ const SignupAndLogin = () => {
 
       const res = await api.post('/api/auth/login',loginData)
         if(res.data.success) {
-        localStorage.setItem("token", res.data.token);
-        dispatch(loginSuccess({user:res.data.user,token:res.data.token}))
+        // localStorage.setItem("token", res.data.token);
+        dispatch(loginSuccess({user:res.data.user}))
         toast.success(res.data.message || "Login successful!");
          navigate("/");
           }else{
