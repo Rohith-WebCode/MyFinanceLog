@@ -7,12 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../store/authSlice';
 import imageCompression from "browser-image-compression";
+import uploadToCloudinary from '../cloudinary/uploadToCloudinary';
 
 const SignupAndLogin = () => {
   const [login, setLogin] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const [compressedImage, setCompressedImage] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,15 +22,33 @@ const SignupAndLogin = () => {
     image: null,
   });
 
- const handleChange  = (e)=>{
-  if(e.target.name === "image"){
-    const file = e.target.files[0]
-    setFormData({...formData,image:file})
-    setSelectedImage(URL.createObjectURL(file))
-  }else{
-    setFormData({...formData,[e.target.name]:e.target.value})
+ const handleChange  =async (e)=>{
+ if (e.target.name === "image") {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith("image/")) {
+  toast.error("Please select a valid image file.");
+  return;
+}
+    if (file) {
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 800,
+        useWebWorker: true,
+      };
+      try {
+        const compressed = await imageCompression(file, options);
+        const imageUrl = await uploadToCloudinary(compressed);
+        
+        setCompressedImage(imageUrl);
+        // setFormData({ ...formData, image: compressed });
+        setSelectedImage(URL.createObjectURL(compressed))
+      } catch (error) {
+        console.error("Image compression failed:", error);
+      }
+    }
+  } else {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
-
  }
 
  const handleSubmit = async(e)=>{
@@ -37,28 +57,11 @@ const SignupAndLogin = () => {
     
 if (!login) {
   try {
-    let compressedImage = formData.image;
-
-    // Compress only if an image is selected
-    if (formData.image) {
-      const options = {
-        maxSizeMB: 1, // Target size in MB
-        maxWidthOrHeight: 800, // Resize for faster upload
-        useWebWorker: true, // Runs in background thread
-      };
-      compressedImage = await imageCompression(formData.image, options);
-    }
-
-    const formDataToSend = new FormData();
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("password", formData.password);
-    if (compressedImage) {
-      formDataToSend.append("profilePic", compressedImage);
-    }
-
-    const res = await api.post("/api/auth/signup", formDataToSend, {
-      headers: { "Content-Type": "multipart/form-data" },
+    const res = await api.post("/api/auth/signup", {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      profilePic: compressedImage // Cloudinary URL
     });
 
     if (res.data.success) {
@@ -69,9 +72,11 @@ if (!login) {
     }
   } catch (error) {
     console.error(error);
-    toast.error("Image compression failed!");
+    toast.error(error.response?.data?.message || "Something went wrong!");
   }
-}else{
+}
+
+else{
     const loginData = {
         email: formData.email,
         password: formData.password,

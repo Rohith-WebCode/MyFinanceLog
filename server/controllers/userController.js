@@ -3,10 +3,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const registerUser  =async (req,res)=>{
-    console.log("hi this is testing");
-    
-    const {name,email,password} = req.body
-    const profilePic = req.file ? req.file.path : undefined;
+       const { name, email, password,profilePic} = req.body; 
+        
     try {
         const userExists = await User.findOne({email});
         if(userExists) return res.status(400).json({ message: "User already exists" });
@@ -17,7 +15,7 @@ const registerUser  =async (req,res)=>{
             name,
             email,
             password :hashedPassword,
-            profilePic
+            profilePic: profilePic || "https://res.cloudinary.com/dgrxeqayx/image/upload/v1754314800/12225935_ul55vr.png" 
         })
 
         await newUser.save()
