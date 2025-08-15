@@ -5,8 +5,6 @@ import api from "../utils/axios";
 export const getMe = createAsyncThunk('auth/profile', async () => { 
   const res = await api.get('/api/profile');
   return res.data;
-  console.log(res.data);
-  
 });
 
 
