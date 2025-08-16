@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const {registerUser,loginUser,logOut} = require('../controllers/userController') 
-const upload = require('../middleware/multer')
 const protect = require('../middleware/protect')
 
 router.post('/auth/signup',registerUser)

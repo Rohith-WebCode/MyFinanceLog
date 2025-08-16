@@ -1,6 +1,7 @@
 const Transaction = require("../models/TransactionSchema")
 
 const addTransaction = async (req,res)=>{
+  // console.log("this is a call");
       const { title, amount, type, category, date } = req.body;
       try {
         const newTransaction = new Transaction({

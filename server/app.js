@@ -14,7 +14,7 @@ connectDB()
 
 app.use(cors({
     origin: "http://localhost:5173", // your frontend URL
-  credentials: true 
+    credentials: true 
 }))
 app.use(express.json())
 app.use(cookieParser());

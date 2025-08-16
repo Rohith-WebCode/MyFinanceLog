@@ -3,6 +3,7 @@ import { HiMinus, HiPlus } from 'react-icons/hi'
 import { useDispatch} from 'react-redux'
 import { openDialog } from '../store/TransactionSlice';
 import IncomeExpensesDialog from '../components/IncomeExpensesDialog';
+import TotalCards from '../components/TotalCards';
 
 const Dashboard = () => {
   const dispatch  = useDispatch();
@@ -27,6 +28,7 @@ const Dashboard = () => {
       </button>
     <IncomeExpensesDialog/>
     </div>
+    <TotalCards/>
 
     
     </div>
