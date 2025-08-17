@@ -15,8 +15,6 @@ function AppContent() {
   // const { user, loading } = useSelector(state => state.auth);
   const location = useLocation();
 
-
-
   // Paths where we hide Sidebar & Topbar
   const hideNavPaths = ["/register", "/login"];
   const hideNav = hideNavPaths.includes(location.pathname);

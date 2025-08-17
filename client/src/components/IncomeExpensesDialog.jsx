@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, InputLabel, Select, MenuItem, FormControl } from "@mui/material"
-import { useDispatch, useSelector } from "react-redux";
-import { addTransaction, closeDialog } from "../store/TransactionSlice";
+import { useDispatch, useSelector} from "react-redux";
+import { addTransaction, closeDialog, getLastMonthTransactions } from "../store/TransactionSlice";
 import { IoMdClose } from "react-icons/io";
 import api from "../utils/axios"
 import { toast } from "react-toastify";
@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 const IncomeExpensesDialog = () => { 
   const dispatch = useDispatch();
   const { isOpen, type } = useSelector((state) => state.Transaction);
-
+    
 const incomeCategories = [
   { key: "salary", label: "salary" },
   { key: "business", label: "business" },
@@ -57,6 +57,7 @@ const expenseCategories = [
           if (res.status === 201) {
             dispatch(addTransaction(res.data.transaction))
             toast.success(res.data.message || `${type} added!`);
+             dispatch(getLastMonthTransactions()) 
             setFormData({ title: "", amount: "", category: "", type, date: "" });
           } else {
             toast.error(res.data.message || "Something went wrong!");

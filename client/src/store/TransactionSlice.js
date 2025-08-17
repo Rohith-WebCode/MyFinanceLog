@@ -1,11 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import api from "../utils/axios";
 
+
+export const getLastMonthTransactions = createAsyncThunk(
+  "transactions/getLastMonthTransactions",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await api.get("/api/30days/transactions");
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
+    }
+  }
+);
 
 const initialState ={
   isOpen: false,
   type: "" ,
   transactions:[]
 };
+
 
 
 const TransactionSlice = createSlice({
@@ -26,6 +40,18 @@ const TransactionSlice = createSlice({
       state.isOpen = false;
       state.type = ""
     }
+   },
+   extraReducers:(builder)=>{
+    builder
+      .addCase(getLastMonthTransactions.fulfilled, (state, action) => {
+              state.transactions = action.payload.transaction;
+              // console.log(action.payload.transaction);
+              console.log(state.transactions);
+              
+            })
+      .addCase(getLastMonthTransactions.rejected, (state, action) => {
+        console.error("Error fetching transactions:", action.payload);
+      });
    }
 })
 
