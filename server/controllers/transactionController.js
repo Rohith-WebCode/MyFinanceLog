@@ -44,38 +44,49 @@ const getTransactions = async (req,res)=>{
 
 
 const getLastMonthTransactions = async(req,res) =>{
-  console.log("this is ");
-  console.log(req.user);
-  
-      const pages = Math.max(parseInt(req.query.pages) || 1,1)
-      const limit = 10
-      const skip = (pages - 1) *limit
       try {
-  
           const thirtyDaysAgo  = new Date()
           thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
   
-          const [transaction,total] = await Promise.all([
-          Transaction.find({  
+          const transaction =await Transaction.find({  
                       userId:req.user,
                       date:{$gte:thirtyDaysAgo}
                   })
                   .sort({date:-1})
-                  .skip(skip)
-                  .limit(limit),
-                  Transaction.countDocuments({userId:req.user,date: { $gte: thirtyDaysAgo } })     
-          ]) 
+      
+    
           res.status(200).json({
               transaction,
-              pages,
-              totalPages:Math.ceil(total/limit),
-              total
           })
       } catch (error) {
            res.status(500).json({ message: 'Failed to fetch 30 days transactions', error: error.message });
       }
 
 }
+
+
+const getAnalytics =async (req,res)=>{
+  try {
+     const currentYear = new Date().getFullYear();
+    const result = await Transaction.find({
+          userId:req.user,
+          date:{$gte:currentYear}
+          }).sort({date:-1})
+
+          res.status(200).json({
+            result
+          })
+    
+  } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch Analytics', error: error.message });
+  }
+
+}
+
+
+
+
+
 
 const deleteTransaction  =async (req,res)=>{
   try {
@@ -117,4 +128,4 @@ const searchTransaction = async (req,res)=>{
 }
 
 
-module.exports = {addTransaction,getTransactions,deleteTransaction,searchTransaction,getLastMonthTransactions}
+module.exports = {addTransaction,getTransactions,deleteTransaction,searchTransaction,getLastMonthTransactions,getAnalytics}

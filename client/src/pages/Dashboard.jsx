@@ -4,6 +4,7 @@ import { useDispatch} from 'react-redux'
 import { openDialog } from '../store/TransactionSlice';
 import IncomeExpensesDialog from '../components/IncomeExpensesDialog';
 import TotalCards from '../components/TotalCards';
+import AnalyticsChart from '../components/AnalyticsChart';
 
 const Dashboard = () => {
   const dispatch  = useDispatch();
@@ -29,6 +30,13 @@ const Dashboard = () => {
     <IncomeExpensesDialog/>
     </div>
     <TotalCards/>
+
+    <div className='pt-5 flex'>
+       <AnalyticsChart/>
+       <div><p>hi</p></div>
+    </div>
+
+
 
     
     </div>

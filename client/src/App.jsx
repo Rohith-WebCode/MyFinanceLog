@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import SignupAndLogin from "./pages/SignupAndLogin";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "./store/authSlice";
+import { getFullTransactions, getYearlyAnalytics } from "./store/TransactionSlice";
 
 function AppContent() {
 
@@ -21,10 +22,9 @@ function AppContent() {
 
   useEffect(() => {
     dispatch(getMe()); 
-  
+   dispatch(getFullTransactions()) 
+   dispatch(getYearlyAnalytics())
   }, [dispatch]);
-
-
   return (
     <div className="flex h-screen">
       {/* Sidebar */}

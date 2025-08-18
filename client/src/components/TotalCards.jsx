@@ -16,13 +16,13 @@ const TotalCards = () => {
     dispatch(getLastMonthTransactions()) 
   },[dispatch])
   
-const totalIncome = (transactions || [])
+const totalIncome = Math.round((transactions || [])
   .filter((t) => t?.type === "income")
-  .reduce((sum, t) => sum + (t?.amount || 0), 0);
+  .reduce((sum, t) => sum + (t?.amount || 0), 0));
 
-const totalExpense = (transactions || [])
+const totalExpense = Math.round((transactions || [])
   .filter((t) => t?.type === "expense")
-  .reduce((sum, t) => sum + (t?.amount || 0), 0);
+  .reduce((sum, t) => sum + (t?.amount || 0), 0));
 
 const balance = totalIncome - totalExpense;
 
