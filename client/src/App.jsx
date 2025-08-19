@@ -26,7 +26,7 @@ function AppContent() {
    dispatch(getYearlyAnalytics())
   }, [dispatch]);
   return (
-    <div className="flex h-screen">
+    <div className="flex  h-screen">
       {/* Sidebar */}
       <ToastContainer/>
       {!hideNav && (
@@ -39,7 +39,7 @@ function AppContent() {
       <div className={`flex flex-col flex-1 ${!hideNav ? "md:ml-60" : ""}`}>
         {/* Topbar */}
         {!hideNav && (
-          <div className="sticky top-0 z-50 h-28 sm:h-16 bg-[#eef0fc] flex items-center">
+          <div className="top-0 z-50 h-28 sm:h-16 bg-[#eef0fc] flex items-center">
             <Topbar />
           </div>
         )}

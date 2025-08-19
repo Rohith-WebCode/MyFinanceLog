@@ -48,17 +48,17 @@ const AnalyticsChart = () => {
   }, [yearTransactions, currentYear]);
 
   return (
-    <div className="w-full h-80 p-4 bg-white rounded-lg shadow-md">
-      <p className="py-4 text-lg"> Analytics</p>
+    <div className="w-full flex-1 h-100 p-4 bg-white rounded-lg shadow-md">
+      <p className="text-base lg:text-lg font-semibold mb-4"> Analytics</p>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={chartData} barSize={20}>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          {/* <CartesianGrid strokeDasharray="3 3" vertical={false} /> */}
           <XAxis dataKey="month" />
           <YAxis
             tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
           />
           <Tooltip formatter={(value) => `$${value}`} />
-          <Legend verticalAlign="bottom" height={36} />
+          <Legend verticalAlign="bottom" height={100} />
           <Bar dataKey="Expense" fill="#4F46E5" radius={[6, 6, 0, 0]} />
           <Bar dataKey="Income" fill="#C084FC" radius={[6, 6, 0, 0]} />
         </BarChart>

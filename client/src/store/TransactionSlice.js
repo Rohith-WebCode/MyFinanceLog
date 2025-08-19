@@ -20,6 +20,8 @@ export const getFullTransactions = createAsyncThunk(
     try {
       const res = await api.get("/api/transactions");
       return res.data;
+      console.log(res.data);
+      
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch");
     }
@@ -43,7 +45,12 @@ const initialState ={
   type: "" ,
   transactions:[],
   allTransactions:[],
-  yearTransactions : []
+  yearTransactions : [],
+  pagination: {
+    page: 1,
+    totalPages: 1,
+    total: 0,
+  },
 };
 
 
@@ -80,10 +87,13 @@ const TransactionSlice = createSlice({
       })
 
       .addCase(getFullTransactions.fulfilled, (state, action) => {
-              state.allTransactions = action.payload.transaction;
-              // console.log(action.payload.transaction);
-              // console.log(state.yearTransactions);
-              
+              state.allTransactions = action.payload.transaction;   
+              state.pagination = {
+              page: action.payload.page,
+              totalPages: action.payload.totalPages,
+              total: action.payload.total,
+            };
+                                
             })
       .addCase(getFullTransactions.rejected, (state, action) => {
         console.error("Error fetching transactions:", action.payload);

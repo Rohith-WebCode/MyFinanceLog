@@ -28,8 +28,8 @@ const balance = totalIncome - totalExpense;
 
 
   return (
-    <div className='lg:flex pt-12 w-full'>
-       <Card sx={{ m:2, p: 2,flex: 1,borderRadius:4}}>
+    <div className='lg:flex pt-12 w-full gap-6'>
+       <Card sx={{my:2, p: 2,flex: 1,borderRadius:4 }}>
         <CardContent sx={{display:"flex",alignItems:"center", gap:2}}>
           <div className="bg-blue-700 p-3 rounded-full">
              <MdOutlineAccountBalance className="text-4xl text-neutral-50"/>
@@ -44,7 +44,7 @@ const balance = totalIncome - totalExpense;
         </CardContent>
         </Card>
 
-       <Card sx={{ m: 2, p: 2,flex: 1,borderRadius:4}}>
+       <Card sx={{my:2, p: 2,flex: 1,borderRadius:4}}>
         <CardContent sx={{display:"flex",alignItems:"center", gap:2}}>
             <div className="bg-orange-700 p-3 rounded-full">
              <MdOutlineAccountBalanceWallet className="text-4xl text-neutral-50"/>
@@ -57,7 +57,7 @@ const balance = totalIncome - totalExpense;
         </CardContent>
         </Card>
 
-        <Card sx={{ m: 2, p: 2,flex: 1,borderRadius:4}}>
+        <Card sx={{my:2,  p: 2,flex: 1,borderRadius:4}}>
         <CardContent sx={{display:"flex",alignItems:"center", gap:2}}>
            <div className="bg-red-700 p-3 rounded-full">
              <GiReceiveMoney className="text-4xl text-neutral-50"/>

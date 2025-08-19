@@ -11,9 +11,6 @@ import { useSelector } from 'react-redux';
 const Topbar = () => {
   const { user} = useSelector(state => state.auth);
 
-  // console.log(user);
-  
-
   return (
   <div className="p-4 w-full">
     <div className='flex justify-between md:justify-end items-center gap-4'>
