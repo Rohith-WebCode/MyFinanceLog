@@ -16,9 +16,9 @@ export const getLastMonthTransactions = createAsyncThunk(
 
 export const getFullTransactions = createAsyncThunk(
   "transactions/getFullTransactions",
-  async (_, { rejectWithValue }) => {
+  async (page = 1, { rejectWithValue }) => {
     try {
-      const res = await api.get("/api/transactions");
+      const res = await api.get(`/api/transactions?pages=${page}`);
       return res.data;
       console.log(res.data);
       
