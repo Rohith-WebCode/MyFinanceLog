@@ -20,7 +20,6 @@ const AnalyticsChart = () => {
     "Jul","Aug","Sep","Oct","Nov","Dec",
   ];
 
-  // Prepare data for Recharts
   const chartData = useMemo(() => {
     return months.map((month) => {
       const income = yearTransactions
@@ -43,7 +42,7 @@ const AnalyticsChart = () => {
         )
         .reduce((sum, t) => sum + t.amount, 0);
 
-      return { month, Income: income, Expense: expense };
+      return { month, Income: Math.round(income) , Expense: Math.round(expense)};
     });
   }, [yearTransactions, currentYear]);
 
@@ -55,9 +54,9 @@ const AnalyticsChart = () => {
           {/* <CartesianGrid strokeDasharray="3 3" vertical={false} /> */}
           <XAxis dataKey="month" />
           <YAxis
-            tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+            tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
           />
-          <Tooltip formatter={(value) => `$${value}`} />
+          <Tooltip formatter={(value) => `₹${value}`} />
           <Legend verticalAlign="bottom" height={100} />
           <Bar dataKey="Expense" fill="#4F46E5" radius={[6, 6, 0, 0]} />
           <Bar dataKey="Income" fill="#C084FC" radius={[6, 6, 0, 0]} />

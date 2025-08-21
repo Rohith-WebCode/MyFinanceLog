@@ -6,14 +6,14 @@ const CategoryPieChart = () => {
       const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
       
       const categoryData  = Object.values(
-        transactions.reduce((acc,transaction) =>{
-          const category = transaction.category || "other";
-
+        (transactions||[]).reduce((acc,transaction) =>{
+          const category = transaction?.category || "other";
+   
           if(!acc[category]){
             acc[category] = {name:category,value:0};
           }
 
-          acc[category].value += Number(transaction.amount)
+          acc[category].value += Math.round( Number(transaction?.amount))
           return acc;
 
         },{})
@@ -38,12 +38,14 @@ const CategoryPieChart = () => {
         paddingAngle={2}
         dataKey="value"
         >
-           {categoryData.map((entry, index) => (
+           {categoryData.length > 0 &&
+           
+           categoryData.map((entry, index) => (
           <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]}/>
         ))}
 
             <Label
-            value={`$${totalExpense}`}
+            value={`₹${totalExpense}`}
             position="center"
             style={{ fontSize: '18px', fontWeight: 'bold' }}
           />

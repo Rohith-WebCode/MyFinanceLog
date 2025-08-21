@@ -13,7 +13,7 @@ const Topbar = () => {
 
   return (
   <div className="p-4 w-full">
-    <div className='flex justify-between md:justify-end items-center gap-4'>
+    <div className='flex justify-between md:justify-end px-5 items-center gap-4'>
 
      <div className='flex md:hidden'>
         <h1 className='text-lg font-bold'>MyFinanceLog</h1>
@@ -45,7 +45,7 @@ const Topbar = () => {
 
       {/* Profile Icon */}
       {
-        user ? <img src={user.profilePic} className='w-12 h-12 rounded-full m-2'/> : <Link to="/register"><Button variant="outlined"sx={{ mx: 2, borderRadius:10, fontSize:12}}>sign Up</Button></Link> 
+        user ? <img src={user.profilePic} className='w-12 h-12 rounded-full '/> : <Link to="/register"><Button variant="outlined"sx={{ mx: 2, borderRadius:10, fontSize:12}}>sign Up</Button></Link> 
       }
     
 

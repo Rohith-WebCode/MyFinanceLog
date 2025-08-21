@@ -13,7 +13,8 @@ import {
   Button,
 } from "@mui/material";
 
-const FullTransactionstable = () => {
+const RecentexpensesTable = () => {
+
    const dispatch = useDispatch();
    const [open, setOpen] = useState(false);
    const [selectedId, setSelectedId] = useState(null);
@@ -57,10 +58,11 @@ const FullTransactionstable = () => {
   }
 };
 
+
   return (
-    <div className="w-full p-4 bg-white rounded-lg shadow-md">
+  <div className="w-full p-4 bg-white rounded-lg shadow-md">
       <div className="flex items-center justify-between">
-        <p className="font-semibold text-lg">Transactions</p>
+        <p className="font-semibold text-lg">Expenses</p>
       </div>
 
       <div className="pt-2 overflow-auto">
@@ -165,7 +167,7 @@ const FullTransactionstable = () => {
       </Dialog>
 
     </div>
-  );
-};
+  )
+}
 
-export default FullTransactionstable;
+export default RecentexpensesTable

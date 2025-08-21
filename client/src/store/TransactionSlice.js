@@ -19,15 +19,12 @@ export const getFullTransactions = createAsyncThunk(
   async (page = 1, { rejectWithValue }) => {
     try {
       const res = await api.get(`/api/transactions?pages=${page}`);
-      return res.data;
-      console.log(res.data);
-      
+      return res.data; 
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch");
     }
   }
 );
-
 export const getYearlyAnalytics = createAsyncThunk(
   "transactions/getYearlyAnalyticss",
   async (_, { rejectWithValue }) => {
@@ -40,6 +37,33 @@ export const getYearlyAnalytics = createAsyncThunk(
   }
 );
 
+export const deleteTransactions = createAsyncThunk(
+  "transactions/deleteTransactions",
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await api.delete(`/api/transactions/${id}`);
+      return res.data;    
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
+    }
+  }
+);
+
+
+// export const getExpense = createAsyncThunk(
+//   "transactions/getExpense",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const res = await api.get("/transactions/expense");
+//       return res.data;
+//     } catch (err) {
+//       return rejectWithValue(err.response?.data?.message || "Failed to fetch");
+//     }
+//   }
+// );
+
+
+
 const initialState ={
   isOpen: false,
   type: "" ,
@@ -51,9 +75,9 @@ const initialState ={
     totalPages: 1,
     total: 0,
   },
-};
-
-
+  deleteTransactions:false,
+  allExpense:[]
+}; 
 
 const TransactionSlice = createSlice({
    name:"TransactionSlice",
@@ -78,9 +102,6 @@ const TransactionSlice = createSlice({
     builder
       .addCase(getLastMonthTransactions.fulfilled, (state, action) => {
               state.transactions = action.payload.transaction;
-              // console.log(action.payload.transaction);
-              // console.log(state.transactions);
-              
             })
       .addCase(getLastMonthTransactions.rejected, (state, action) => {
         console.error("Error fetching transactions:", action.payload);
@@ -99,17 +120,33 @@ const TransactionSlice = createSlice({
         console.error("Error fetching transactions:", action.payload);
       })
 
-
-
       .addCase(getYearlyAnalytics.fulfilled, (state, action) => {
-              state.yearTransactions = action.payload.result;
-              // console.log(action.payload.transaction);
-              // console.log(state.yearTransactions);
-              
+              state.yearTransactions = action.payload.result;              
             })
       .addCase(getYearlyAnalytics.rejected, (state, action) => {
         console.error("Error fetching transactions:", action.payload);
       })
+
+
+      .addCase(deleteTransactions.fulfilled, (state, action) => {
+              state.deleteTransactions = true;              
+            })
+      .addCase(deleteTransactions.rejected, (state, action) => {
+        console.error("Error delete transactions:", action.payload);
+      })
+
+
+      // .addCase(getExpense.fulfilled, (state, action) => {
+      //         state.allExpense = action.payload.transaction;  
+      //         state.pagination = {
+      //         page: action.payload.page,
+      //         totalPages: action.payload.totalPages,
+      //         total: action.payload.total,
+      //       };            
+      //       })
+      // .addCase(deleteTransactions.rejected, (state, action) => {
+      //   console.error("Error delete transactions:", action.payload);
+      // })
    }
 })
 

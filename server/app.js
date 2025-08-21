@@ -11,7 +11,7 @@ const Income_Expense = require('./routes/Income_Expense')
 
 connectDB()
 
-
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin: "http://localhost:5173", // your frontend URL
     credentials: true 

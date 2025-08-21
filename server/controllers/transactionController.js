@@ -23,13 +23,21 @@ const getTransactions = async (req,res)=>{
   const page  =Math.max (parseInt(req.query.pages) || 1,1)
   const limit = 10
   const skip  = (page - 1)*limit
+  
     try {
+    const {type,days} = req.query;
+    const filter = { userId: req.user };
+
+    if (type) {
+      filter.type = type; 
+    }
+    
         const [transaction,total]= await Promise.all([
-          Transaction.find({userId:req.user})
+          Transaction.find(filter)
           .sort({date:-1})
           .skip(skip)
           .limit(limit),
-          Transaction.countDocuments({userId:req.user})
+          Transaction.countDocuments(filter)
         ])
         res.status(200).json({
           transaction,
@@ -83,12 +91,8 @@ const getAnalytics =async (req,res)=>{
 
 }
 
-
-
-
-
-
 const deleteTransaction  =async (req,res)=>{
+
   try {
     const deletedTransaction   = await Transaction.findByIdAndDelete({
       _id:req.params.id,

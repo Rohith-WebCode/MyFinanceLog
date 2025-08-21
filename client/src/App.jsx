@@ -22,11 +22,11 @@ function AppContent() {
 
   useEffect(() => {
     dispatch(getMe()); 
-   dispatch(getFullTransactions()) 
-   dispatch(getYearlyAnalytics())
+    dispatch(getFullTransactions()) 
+    dispatch(getYearlyAnalytics())
   }, [dispatch]);
   return (
-    <div className="flex  h-screen">
+    <div className="flex h-screen">
       {/* Sidebar */}
       <ToastContainer/>
       {!hideNav && (
