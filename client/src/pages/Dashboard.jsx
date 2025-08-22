@@ -7,8 +7,9 @@ import TotalCards from '../components/TotalCards';
 import AnalyticsChart from '../components/AnalyticsChart';
 import CategoryPieChart from '../components/categoryPieChart';
 import FullTransactionstable from '../components/FullTransactionstable';
-import Recentexpenses from '../components/RecentexpensesTable';
-import RecentexpensesTable from '../components/RecentexpensesTable';
+import RecentexpensesTable from '../components/ExpensesTable';
+import ExpenseLineChart from '../components/ExpenseLineChart';
+import RecentIncomeTable from '../components/IncomeTable';
 
 const Dashboard = () => {
   const dispatch  = useDispatch();
@@ -50,18 +51,6 @@ const Dashboard = () => {
 <div className='w-full my-6'>
   <FullTransactionstable/> 
 </div>
-
-
-<div className="flex flex-col lg:flex-row w-full gap-6">
-  <div className="lg:w-[83%] w-full">
-    <RecentexpensesTable/>
-  </div>
-  <div className="lg:w-2/5 w-full">
-
-  </div>
-</div>
-
-
 
     
     </div>

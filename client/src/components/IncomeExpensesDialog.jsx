@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, InputLabel, Select, MenuItem, FormControl } from "@mui/material"
 import { useDispatch, useSelector} from "react-redux";
-import { addTransaction, closeDialog, getFullTransactions, getLastMonthTransactions, getYearlyAnalytics } from "../store/TransactionSlice";
+import { addTransaction, closeDialog, getExpense, getFullTransactions, getIncome, getLastMonthTransactions, getYearlyAnalytics } from "../store/TransactionSlice";
 import { IoMdClose } from "react-icons/io";
 import api from "../utils/axios"
 import { toast } from "react-toastify";
@@ -57,6 +57,8 @@ const expenseCategories = [
           if (res.status === 201) {
             dispatch(addTransaction(res.data.transaction))
             toast.success(res.data.message || `${type} added!`);
+            dispatch(getIncome());
+            dispatch(getExpense());
             dispatch(getFullTransactions()) 
             dispatch(getYearlyAnalytics())
             dispatch(getLastMonthTransactions()) 

@@ -25,6 +25,8 @@ export const getFullTransactions = createAsyncThunk(
     }
   }
 );
+
+
 export const getYearlyAnalytics = createAsyncThunk(
   "transactions/getYearlyAnalyticss",
   async (_, { rejectWithValue }) => {
@@ -50,17 +52,52 @@ export const deleteTransactions = createAsyncThunk(
 );
 
 
-// export const getExpense = createAsyncThunk(
-//   "transactions/getExpense",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const res = await api.get("/transactions/expense");
-//       return res.data;
-//     } catch (err) {
-//       return rejectWithValue(err.response?.data?.message || "Failed to fetch");
-//     }
-//   }
-// );
+export const getExpense = createAsyncThunk(
+  "transactions/getExpense",
+  async (page = 1, { rejectWithValue }) => {
+    try {
+      const res = await api.get(`/api/transactions?type=expense&pages=${page}`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
+    }
+  }
+);
+
+export const getIncome = createAsyncThunk(
+  "transactions/getIncome",
+  async (page = 1, { rejectWithValue }) => {
+    try {
+      const res = await api.get(`/api/transactions?type=income&pages=${page}`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
+    }
+  }
+);
+
+export const get30daysExpense = createAsyncThunk(
+  "transactions/get30DaysExpense",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await api.get(`/api/transactions/expense/30days`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
+    }
+  }
+);
+export const get30daysIncome = createAsyncThunk(
+  "transactions/get60DaysIncome",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await api.get(`/api/transactions/income/30days`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch");
+    }
+  }
+);
 
 
 
@@ -76,7 +113,10 @@ const initialState ={
     total: 0,
   },
   deleteTransactions:false,
-  allExpense:[]
+  allExpense:[],
+  daysExpense:[],
+  allIncome:[],
+  chartdataincome:[]
 }; 
 
 const TransactionSlice = createSlice({
@@ -135,18 +175,45 @@ const TransactionSlice = createSlice({
         console.error("Error delete transactions:", action.payload);
       })
 
+      .addCase(getExpense.fulfilled, (state, action) => {
+              state.allExpense = action.payload.transaction;  
+              state.pagination = {
+              page: action.payload.page,
+              totalPages: action.payload.totalPages,
+              total: action.payload.total,
+            };            
+            })
+      .addCase(getExpense.rejected, (state, action) => {
+        console.error("Error delete transactions:", action.payload);
+      })
 
-      // .addCase(getExpense.fulfilled, (state, action) => {
-      //         state.allExpense = action.payload.transaction;  
-      //         state.pagination = {
-      //         page: action.payload.page,
-      //         totalPages: action.payload.totalPages,
-      //         total: action.payload.total,
-      //       };            
-      //       })
-      // .addCase(deleteTransactions.rejected, (state, action) => {
-      //   console.error("Error delete transactions:", action.payload);
-      // })
+      .addCase(get30daysExpense.fulfilled, (state, action) => {
+              state.daysExpense = action.payload.transaction;             
+            })
+      .addCase(get30daysExpense.rejected, (state, action) => {
+        console.error("Error delete transactions:", action.payload);
+      })
+
+      .addCase(getIncome.fulfilled, (state, action) => {
+              state.allIncome = action.payload.transaction; 
+              state.pagination = {
+              page: action.payload.page,
+              totalPages: action.payload.totalPages,
+              total: action.payload.total,
+            };  
+                          
+            })
+      .addCase(getIncome.rejected, (state, action) => {
+        console.error("Error delete transactions:", action.payload);
+      })
+
+
+        .addCase(get30daysIncome.fulfilled, (state, action) => {
+              state.chartdataincome = action.payload.transaction;             
+            })
+      .addCase(get30daysIncome.rejected, (state, action) => {
+        console.error("Error delete transactions:", action.payload);
+      })
    }
 })
 

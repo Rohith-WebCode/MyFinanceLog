@@ -29,11 +29,11 @@ const Sidebar = () => {
           </div>
           <div className='flex items-center py-2 gap-2'>
             <FaMoneyBillWave />
-            <p className='text-lg'>Income</p>
+           <Link to="/income"><p className='text-lg'>Income</p></Link>
           </div>
           <div className='flex items-center py-2 gap-2'>
             <FaShoppingCart/>
-            <p className='text-lg'>Expenses</p>
+           <Link to="/expense"><p className='text-lg'>Expenses</p></Link> 
           </div>
         </div>
 

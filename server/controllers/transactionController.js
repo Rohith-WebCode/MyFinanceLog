@@ -25,7 +25,7 @@ const getTransactions = async (req,res)=>{
   const skip  = (page - 1)*limit
   
     try {
-    const {type,days} = req.query;
+    const {type} = req.query;
     const filter = { userId: req.user };
 
     if (type) {

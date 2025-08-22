@@ -19,34 +19,25 @@ const getLast30DaysExpenses = async(req,res)=>{
     }
     
 }
-const getLast60DaysIncome = async(req,res)=>{
-    const pages = Math.max(parseInt(req.query.pages) || 1,1)
-    const limit = 10
-    const skip = (pages - 1) *limit
-
+const getLast30DaysIncome = async(req,res)=>{
+    
 try {
-    const sixtyDaysAgo = new Date()
-    sixtyDaysAgo.setDate(sixtyDaysAgo.getDate()- 60)
-    const [transaction,total] = await Promise.all([
-        Transaction.find({
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate()- 30)
+
+  const transaction =await Transaction.find({
             userId:req.user,
             type:"income",
-            date:{$gte:sixtyDaysAgo}
+            date:{$gte:thirtyDaysAgo}
         }).sort({date:-1})
-        .skip(skip)
-        .limit(limit),
-        Transaction.countDocuments({userId:req.user})    
-    ])
+
     res.status(200).json({
-        transaction,
-        pages,
-        totalPages:Math.ceil(total/limit),
-        total
+        transaction
     })
 } catch (error) {
-     res.status(500).json({ message: 'Failed to fetch 60 days expense transactions', error: err.message });
+     res.status(500).json({ message: 'Failed to fetch 30 days expense transactions', error: error.message });
 }
 
 }
 
-module.exports  = {getLast30DaysExpenses,getLast60DaysIncome}
+module.exports  = {getLast30DaysExpenses,getLast30DaysIncome}

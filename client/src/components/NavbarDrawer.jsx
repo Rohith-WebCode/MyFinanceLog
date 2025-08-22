@@ -8,8 +8,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { IconButton } from '@mui/material';
@@ -37,8 +35,8 @@ export default function NavbarDrawer() {
 
    const navLinks = [
     { text: 'Dashboard', path: '/', icon: <MdSpaceDashboard /> },
-    { text: 'Income', path: '/about', icon: < FaMoneyBillWave/> },
-    { text: 'Expenses', path: '/services', icon: <FaShoppingCart /> },
+    { text: 'Income', path: '/income', icon: < FaMoneyBillWave/> },
+    { text: 'Expenses', path: '/expense', icon: <FaShoppingCart /> },
     { text: 'Logout', onClick:handleLogout, icon: < HiOutlineLogout/> },
   ];
 

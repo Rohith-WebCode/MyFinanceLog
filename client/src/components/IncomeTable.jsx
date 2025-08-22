@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaChartLine } from "react-icons/fa";
 import { PiChartLineDownBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTransactions, getFullTransactions, getLastMonthTransactions, getYearlyAnalytics } from "../store/TransactionSlice";
+import { deleteTransactions, getIncome } from "../store/TransactionSlice";
 import { MdDelete } from "react-icons/md";
 import {
   Dialog,
@@ -13,25 +13,27 @@ import {
   Button,
 } from "@mui/material";
 
-const RecentexpensesTable = () => {
+const IncomeTable = () => {
 
    const dispatch = useDispatch();
    const [open, setOpen] = useState(false);
    const [selectedId, setSelectedId] = useState(null);
-  const { pagination, allTransactions } = useSelector(
+  const {pagination,allIncome } = useSelector(
     (state) => state.Transaction
   );
 
  
   useEffect(() => {
-    dispatch(getFullTransactions(1));
+    dispatch(getIncome(1));
   }, [dispatch]);
+
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= pagination.totalPages) {
-      dispatch(getFullTransactions(newPage));
+      dispatch(getIncome(newPage));
     }
   };
+
 
   const handleClickOpen = (id) => {
     setSelectedId(id);
@@ -47,9 +49,7 @@ const RecentexpensesTable = () => {
   if (!selectedId) return
   try {
     await dispatch(deleteTransactions(selectedId)) 
-    dispatch(getFullTransactions());
-    dispatch(getYearlyAnalytics());
-    dispatch(getLastMonthTransactions());
+    dispatch(getIncome(1));
   } catch (error) {
     console.error("Delete failed:", error);
   }
@@ -62,7 +62,7 @@ const RecentexpensesTable = () => {
   return (
   <div className="w-full p-4 bg-white rounded-lg shadow-md">
       <div className="flex items-center justify-between">
-        <p className="font-semibold text-lg">Expenses</p>
+        <p className="font-semibold text-lg">Income</p>
       </div>
 
       <div className="pt-2 overflow-auto">
@@ -85,8 +85,8 @@ const RecentexpensesTable = () => {
           </thead>
 
           <tbody>
-            {allTransactions.length > 0 ? (
-              allTransactions.map((tx) => (
+            {allIncome.length > 0 ? (
+              allIncome.map((tx) => (
                 <tr key={tx._id} className="group border-t hover:bg-gray-50">
                   <td className="px-4 py-2 text-sm hidden sm:block">{tx.category}</td>
 
@@ -128,7 +128,7 @@ const RecentexpensesTable = () => {
         </table>
       </div>
      
-     <div className="flex justify-between items-center mt-4">
+         <div className="flex justify-between items-center mt-4">
         <button
           onClick={() => handlePageChange(pagination.page - 1)}
           disabled={pagination.page === 1}
@@ -147,6 +147,7 @@ const RecentexpensesTable = () => {
           Next
         </button>
       </div>
+
 
 
       <Dialog open={open} onClose={handleClose}>
@@ -170,4 +171,4 @@ const RecentexpensesTable = () => {
   )
 }
 
-export default RecentexpensesTable
+export default IncomeTable

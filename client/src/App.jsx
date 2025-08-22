@@ -8,7 +8,9 @@ import Dashboard from "./pages/Dashboard";
 import SignupAndLogin from "./pages/SignupAndLogin";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "./store/authSlice";
-import { getFullTransactions, getYearlyAnalytics } from "./store/TransactionSlice";
+import { get30daysExpense, get30daysIncome, getExpense, getFullTransactions, getIncome, getLastMonthTransactions, getYearlyAnalytics } from "./store/TransactionSlice";
+import Income from "./pages/Income";
+import Expense from "./pages/Expense";
 
 function AppContent() {
 
@@ -21,9 +23,14 @@ function AppContent() {
   const hideNav = hideNavPaths.includes(location.pathname);
 
   useEffect(() => {
+    dispatch(getExpense(1));
+    dispatch(getIncome(1)); 
+    dispatch(getLastMonthTransactions());
     dispatch(getMe()); 
+    dispatch(get30daysExpense())
     dispatch(getFullTransactions()) 
     dispatch(getYearlyAnalytics())
+    dispatch(get30daysIncome())
   }, [dispatch]);
   return (
     <div className="flex h-screen">
@@ -49,6 +56,8 @@ function AppContent() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/register" element={<SignupAndLogin />} />
+            <Route path="/income" element={<Income />} />
+            <Route path="/expense" element={<Expense />} />
           </Routes>
         </div>
       </div>

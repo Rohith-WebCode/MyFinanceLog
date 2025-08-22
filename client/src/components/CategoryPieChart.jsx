@@ -3,10 +3,12 @@ import { Cell, Label, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from
 
 const CategoryPieChart = () => {
       const{transactions} = useSelector((state)=> state.Transaction);
-      const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+      const COLORS = [  "#8884d8", "#82ca9d", "#ffc658","#ff7f7f", "#00C49F", "#0088FE" ];
       
       const categoryData  = Object.values(
-        (transactions||[]).reduce((acc,transaction) =>{
+        (transactions||[])
+        .filter((t) => t?.type === "expense")
+        .reduce((acc,transaction) =>{
           const category = transaction?.category || "other";
    
           if(!acc[category]){
@@ -21,9 +23,7 @@ const CategoryPieChart = () => {
      
   const totalExpense = Math.round((transactions || [])
   .filter((t) => t?.type === "expense")
-  .reduce((sum, t) => sum + (t?.amount || 0), 0));
-
-      
+  .reduce((sum, t) => sum + (t?.amount || 0), 0));    
 
       
   return (
