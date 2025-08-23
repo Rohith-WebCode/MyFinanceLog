@@ -37,7 +37,7 @@ const balance = totalIncome - totalExpense;
           <div className="">
             <Typography sx={{fontSize:17}}>Total Balance</Typography>
             <Typography variant="h4" sx={{fontSize:15}}>
-            {balance}
+            ₹{balance}
             </Typography>
             <Typography sx={{fontSize:13}}>Last Month</Typography>
           </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaChartLine } from "react-icons/fa";
 import { PiChartLineDownBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTransactions, getExpense } from "../store/TransactionSlice";
+import { deleteTransactions, get30daysExpense, getExpense } from "../store/TransactionSlice";
 import { MdDelete } from "react-icons/md";
 import {
   Dialog,
@@ -48,6 +48,8 @@ const ExpensesTable = () => {
   try {
     await dispatch(deleteTransactions(selectedId)) 
     dispatch(getExpense(1));
+    dispatch(get30daysExpense())
+    dispatch
   } catch (error) {
     console.error("Delete failed:", error);
   }

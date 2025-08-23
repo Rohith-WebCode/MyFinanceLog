@@ -3,8 +3,9 @@ import ExpenseLineChart from '../components/ExpenseLineChart'
 import ExpensesTable from '../components/ExpensesTable'
 
 const Expense = () => {
+ 
   return (
-    <div className='w-full'>
+    <div className='w-full relative'>
          <div>
         <ExpenseLineChart/>
         </div>

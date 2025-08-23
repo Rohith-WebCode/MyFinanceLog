@@ -84,7 +84,6 @@ else{
 
       const res = await api.post('/api/auth/login',loginData)
         if(res.data.success) {
-        // localStorage.setItem("token", res.data.token);
         dispatch(loginSuccess({user:res.data.user}))
         toast.success(res.data.message || "Login successful!");
          navigate("/");

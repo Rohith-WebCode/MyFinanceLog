@@ -3,16 +3,20 @@ import React from 'react'
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 import { HiOutlineLogout } from "react-icons/hi";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logOut } from '../store/authSlice';
+import { getMe, logOut } from '../store/authSlice';
+import { resetTransactions } from '../store/TransactionSlice';
 
 const Sidebar = () => {
 
    const dispatch = useDispatch();
+   const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logOut());
+    dispatch(resetTransactions()); 
+    navigate("/register", { replace: true });
   };
 
 

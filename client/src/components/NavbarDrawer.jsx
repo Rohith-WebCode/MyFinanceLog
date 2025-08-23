@@ -9,7 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
@@ -22,8 +22,12 @@ export default function NavbarDrawer() {
 
    const dispatch = useDispatch();
 
+   const navigate = useNavigate();
+
   const handleLogout = () => {
     dispatch(logOut());
+    dispatch(resetTransactions()); 
+    navigate("/register", { replace: true });
   };
 
 

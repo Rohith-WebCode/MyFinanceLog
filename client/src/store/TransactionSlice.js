@@ -136,6 +136,15 @@ const TransactionSlice = createSlice({
     closeDialog:(state) =>{
       state.isOpen = false;
       state.type = ""
+    },
+    resetTransactions: (state) => {
+      state.transactions = [];
+      state.allTransactions = [];
+      state.yearTransactions = [];
+      state.allExpense=[];
+      state.daysExpense=[];
+      state.allIncome=[];
+      state.chartdataincome = [];
     }
    },
    extraReducers:(builder)=>{
@@ -214,9 +223,10 @@ const TransactionSlice = createSlice({
       .addCase(get30daysIncome.rejected, (state, action) => {
         console.error("Error delete transactions:", action.payload);
       })
+      
    }
 })
 
-export const {openDialog,closeDialog,setTransactions,addTransaction} = TransactionSlice.actions;
+export const {openDialog,closeDialog,setTransactions,addTransaction,resetTransactions} = TransactionSlice.actions;
 
 export default TransactionSlice.reducer;

@@ -15,21 +15,19 @@ import Expense from "./pages/Expense";
 function AppContent() {
 
   const dispatch = useDispatch();
-  // const { user, loading } = useSelector(state => state.auth);
   const location = useLocation();
 
-  // Paths where we hide Sidebar & Topbar
   const hideNavPaths = ["/register", "/login"];
   const hideNav = hideNavPaths.includes(location.pathname);
 
   useEffect(() => {
     dispatch(getExpense(1));
+    dispatch(getYearlyAnalytics())
     dispatch(getIncome(1)); 
     dispatch(getLastMonthTransactions());
     dispatch(getMe()); 
     dispatch(get30daysExpense())
     dispatch(getFullTransactions()) 
-    dispatch(getYearlyAnalytics())
     dispatch(get30daysIncome())
   }, [dispatch]);
   return (

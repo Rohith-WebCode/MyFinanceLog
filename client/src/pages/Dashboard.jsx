@@ -1,18 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { HiMinus, HiPlus } from 'react-icons/hi'
 import { useDispatch} from 'react-redux'
-import { openDialog } from '../store/TransactionSlice';
+import { getFullTransactions, getYearlyAnalytics, openDialog } from '../store/TransactionSlice';
 import IncomeExpensesDialog from '../components/IncomeExpensesDialog';
 import TotalCards from '../components/TotalCards';
 import AnalyticsChart from '../components/AnalyticsChart';
 import CategoryPieChart from '../components/categoryPieChart';
 import FullTransactionstable from '../components/FullTransactionstable';
-import RecentexpensesTable from '../components/ExpensesTable';
-import ExpenseLineChart from '../components/ExpenseLineChart';
-import RecentIncomeTable from '../components/IncomeTable';
-
 const Dashboard = () => {
   const dispatch  = useDispatch();
+
+
+  
+    useEffect(() => {
+      dispatch(getYearlyAnalytics())
+      dispatch(getFullTransactions()) 
+    }, [dispatch]);
 
   return (
     <div className='w-full relative'>
