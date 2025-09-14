@@ -116,7 +116,7 @@ const initialState ={
   allExpense:[],
   daysExpense:[],
   allIncome:[],
-  chartdataincome:[]
+  chartdataincome:[],
 }; 
 
 const TransactionSlice = createSlice({
@@ -162,9 +162,9 @@ const TransactionSlice = createSlice({
               page: action.payload.page,
               totalPages: action.payload.totalPages,
               total: action.payload.total,
-            };
-                                
+            };                      
             })
+
       .addCase(getFullTransactions.rejected, (state, action) => {
         console.error("Error fetching transactions:", action.payload);
       })

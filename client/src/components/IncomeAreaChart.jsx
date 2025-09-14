@@ -9,8 +9,6 @@ const IncomeAreaChart = () => {
     const {chartdataincome } = useSelector(
     (state) => state.Transaction
   );
-  console.log(chartdataincome);
-
   const formattedData = chartdataincome
       .map((tx) => ({
         ...tx,
