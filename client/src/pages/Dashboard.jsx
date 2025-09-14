@@ -5,7 +5,7 @@ import { getFullTransactions, getYearlyAnalytics, openDialog } from '../store/Tr
 import IncomeExpensesDialog from '../components/IncomeExpensesDialog';
 import TotalCards from '../components/TotalCards';
 import AnalyticsChart from '../components/AnalyticsChart';
-import CategoryPieChart from '../components/categoryPieChart';
+import CategoryPieChart from '../components/CategoryPieChart';
 import FullTransactionstable from '../components/FullTransactionstable';
 const Dashboard = () => {
   const dispatch  = useDispatch();
