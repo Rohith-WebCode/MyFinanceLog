@@ -13,7 +13,7 @@ connectDB()
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: "https://my-finance-log-ynd6.vercel.app", // your frontend URL
+    origin: "https://my-finance-log.vercel.app", // your frontend URL
     credentials: true 
 }))
 app.use(express.json())
