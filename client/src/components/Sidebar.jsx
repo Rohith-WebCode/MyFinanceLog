@@ -24,7 +24,7 @@ const Sidebar = () => {
     <div className='w-6xl text-center p-7'>
 
          <div className='flex items-center mb-8'>
-        <h1 className='text-xl font-bold'>MyFinanceLog</h1>
+        <h1 className='text-xl font-bold'>MyFinance</h1>
         </div>
         <div className='block'>
           <div className='flex items-center py-2 gap-2'>
